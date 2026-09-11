@@ -28,12 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            panel = new Panel();
+            SuspendLayout();
+            // 
+            // panel
+            // 
+            panel.Dock = DockStyle.Fill;
+            panel.Location = new Point(0, 0);
+            panel.Name = "panel";
+            panel.Size = new Size(324, 161);
+            panel.TabIndex = 0;
+            panel.Paint += panel1_Paint;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Text = "Form1";
+            ClientSize = new Size(324, 161);
+            Controls.Add(panel);
+            Name = "Form1";
+            Text = "Зуммер";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel panel;
     }
 }
