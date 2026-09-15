@@ -13,12 +13,20 @@ namespace Task_2
         public int Y2 { get; set; }
         public Pen pen { get; set; }
 
-        public Grid(Pen pen, int step, int x1, int y1, int x2, int y2)
+        public Grid(Pen pen, string step, int x1, int y1, int x2, int y2)
         {
-            if (step == 0)
-                Step = 100;
-            else
-                Step = step;
+            try
+            {
+                Step = int.Parse(step);
+            }
+            catch(FormatException)
+            {
+                Step = 10;
+            }
+            catch(ArgumentNullException)
+            {
+                Step = 10;
+            }
             X1 = x1;
             X2 = x2;
             Y1 = y1;

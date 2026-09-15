@@ -47,6 +47,7 @@
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
             colorDialog = new ColorDialog();
+            openFileDialog = new OpenFileDialog();
             statusStrip.SuspendLayout();
             toolStrip.SuspendLayout();
             menuStrip.SuspendLayout();
@@ -77,6 +78,11 @@
             panel.Paint += panel_Paint;
             panel.MouseClick += panel_MouseClick;
             panel.MouseMove += panel_MouseMove;
+            // 
+            // saveFileDialog
+            // 
+            saveFileDialog.DefaultExt = "png";
+            saveFileDialog.Filter = "PNG Image|*.png";
             // 
             // toolStrip
             // 
@@ -168,14 +174,21 @@
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(103, 22);
+            openToolStripMenuItem.Size = new Size(180, 22);
             openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(103, 22);
+            saveToolStripMenuItem.Size = new Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            openFileDialog.Filter = "PNG Image|*.png";
             // 
             // Form1
             // 
@@ -190,7 +203,7 @@
             MainMenuStrip = menuStrip;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "Super-mega-ultra-Paint-3000";
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             toolStrip.ResumeLayout(false);
@@ -221,5 +234,6 @@
         private ToolStripLabel toolStripLabel_Color;
         private ColorDialog colorDialog;
         private ToolStripTextBox toolStripTextBox;
+        private OpenFileDialog openFileDialog;
     }
 }

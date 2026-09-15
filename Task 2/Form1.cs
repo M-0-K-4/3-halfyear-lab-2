@@ -1,9 +1,13 @@
+using System.Drawing.Imaging;
+using System.Text.Json;
+
 namespace Task_2
 {
     public partial class Form1 : Form
     {
         Assistant assistant = new();
         Pen pen = new(Color.Black, 4);
+        Image image;
 
         public Form1()
         {
@@ -28,7 +32,7 @@ namespace Task_2
 
         private void toolStripButton_Grid_Click(object sender, EventArgs e)
         {
-            if (toolStripTextBox.Text == "Крок сітки, пкс") 
+            if (toolStripTextBox.Text == "Крок сітки, пкс")
                 toolStripTextBox.Text = "";
             toolStripTextBox.Enabled = true;
             assistant.State = State.BeginGrid;
@@ -83,8 +87,8 @@ namespace Task_2
                     assistant.State = State.Default;
                     break;
                 case State.BeginGrid:
-                    pen = new(toolStripButton_Color.BackColor, 4);
-                    assistant.CurrentFigure = new Grid(pen, int.Parse(toolStripTextBox.Text), e.X, e.Y, e.X, e.Y);
+                    pen = new(toolStripButton_Color.BackColor, 2);
+                    assistant.CurrentFigure = new Grid(pen, toolStripTextBox.Text, e.X, e.Y, e.X, e.Y);
                     assistant.State = State.EndGrid;
                     break;
                 case State.EndGrid:
@@ -132,7 +136,47 @@ namespace Task_2
 
         private void panel_Paint(object sender, PaintEventArgs e)
         {
+            if (image != null)
+            {
+                e.Graphics.DrawImage(image, 0, 0, panel.Width, panel.Height);
+            }
+
             assistant.Draw(e.Graphics);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                int width = panel.Size.Width;
+                int height = panel.Size.Height;
+
+                Bitmap bm = new Bitmap(width, height);
+                panel.DrawToBitmap(bm, new System.Drawing.Rectangle(0, 0, width, height));
+
+                bm.Save(saveFileDialog.FileName, ImageFormat.Png);
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    byte[] bytes = File.ReadAllBytes(openFileDialog.FileName);
+                    using (MemoryStream ms = new MemoryStream(bytes))
+                    {
+                        image = Image.FromStream(ms);
+                        panel.Invalidate();
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Сталася халепа", "!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
